@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Simulator;
-public class Creature
+public abstract class Creature
 {
     private string _name = "Unknown";
     private int _level = 1;
@@ -31,6 +31,8 @@ public class Creature
             _level = Math.Clamp(value, 1, 10);
         }
     }
+
+    public abstract int Power { get; }
     public string Info => $"{Name} [{Level}]";
     public Creature()
     {
@@ -41,7 +43,7 @@ public class Creature
         Name = name;
         Level = level;
     }
-    public void SayHi() => Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
+    public abstract void SayHi();
 
     public void Upgrade() => _level = _level < 10 ? _level + 1 : _level;
     public void Go(Direction direction) => Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}");
@@ -54,5 +56,7 @@ public class Creature
     {
         Go(DirectionParser.Parse(input));
     }
+
+   
 
 }
