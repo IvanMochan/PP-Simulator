@@ -12,28 +12,19 @@ public abstract class Creature
     public string Name
     {
         get { return _name; }
-        init
-        {
-            _name = value.Trim();
-            if (_name.Length > 25)
-                _name = _name.Remove(25).Trim();
-            if (_name.Length < 3)
-                _name = _name.PadRight(3, '#');
-            if (char.IsLower(_name[0]))
-                _name = char.ToUpper(_name[0]) + _name.Substring(1);
-        }
+        init => _name = Validator.Shortener(value, 3, 25, '#');
     }
     public int Level
     {
         get { return _level; }
         init
         {
-            _level = Math.Clamp(value, 1, 10);
+            _level = Validator.Limiter(value, 1, 10);
         }
     }
 
     public abstract int Power { get; }
-    public string Info => $"{Name} [{Level}]";
+    public abstract string Info { get; }
     public Creature()
     {
 
@@ -57,6 +48,6 @@ public abstract class Creature
         Go(DirectionParser.Parse(input));
     }
 
-   
+    public override string ToString() => $"{this.GetType().Name.ToUpper()}: {Info}";
 
 }
