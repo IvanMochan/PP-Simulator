@@ -1,4 +1,6 @@
-﻿namespace Simulator;
+﻿using Simulator.Maps;
+
+namespace Simulator;
 
 internal class Program
 {
@@ -47,9 +49,42 @@ internal class Program
         Console.WriteLine($"NextDiagonal (Down): {start.NextDiagonal(Direction.Down)}");     // Wynik: (4,4)
     }
 
-    static void Main(string[] args)
+    static void Lab5b()
+    {
+        var rectmap1 = new SmallSquareMap(10);
+
+        try
+        {
+            var rectmap2 = new SmallSquareMap(50);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Błędne dane: {ex.Message}");
+        }
+
+        Console.WriteLine($"Czy punkt (5, 5) istnieje na mapie: {rectmap1.Exist(new Point(5, 5))}"); // True
+        Console.WriteLine($"Czy punkt (30, 5) istnieje na mapie: {rectmap1.Exist(new Point(30, 5))}"); // False
+
+
+        Point start = new Point(0, 0);
+
+        Console.WriteLine($"Na prawo z (0, 0): {rectmap1.Next(start, Direction.Right)}"); // Wynik: (1, 0)
+        Console.WriteLine($"Na lewo z (1, 0): {rectmap1.Next(start, Direction.Left)}"); // Wynik: (0, 0)
+        Console.WriteLine($"W górę z (0, 0): {rectmap1.Next(start, Direction.Up)}");       // Wynik: (0, 1)
+        Console.WriteLine($"W dół z (0, 1): {rectmap1.Next(start, Direction.Down)}");       // Wynik: (0, 0)
+
+        Console.WriteLine($"Po przekątnej w prawo z (0, 0): {rectmap1.NextDiagonal(start, Direction.Up)}");    // Wynik: (1, 1)
+        Console.WriteLine($"Po przekątnej w lewo z (1, 1): {rectmap1.NextDiagonal(start, Direction.Left)}");     // Wynik: (0, 0)
+        Console.WriteLine($"Po przekątnej w górę z (0, 0): {rectmap1.NextDiagonal(start, Direction.Up)}");     // Wynik: (1, 1)
+        Console.WriteLine($"Po przekątnej w dół z (1, 1): {rectmap1.NextDiagonal(start, Direction.Down)}");    // Wynik: (0, 0)
+
+    }
+        static void Main(string[] args)
     {
         Console.WriteLine("Starting Simulator!\n");
+        Console.WriteLine("Lab5a\n");
         Lab5a();
+        Console.WriteLine("\nLab5b\n");
+        Lab5b();
     }
 }
