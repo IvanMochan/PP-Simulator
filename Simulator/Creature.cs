@@ -34,19 +34,22 @@ public abstract class Creature
         Name = name;
         Level = level;
     }
-    public abstract void SayHi();
+    public abstract string Greeting();
 
     public void Upgrade() => _level = _level < 10 ? _level + 1 : _level;
-    public void Go(Direction direction) => Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}");
-    public void Go(Direction[] directions)
+    public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
+    public string[] Go(Direction[] directions)
     {
-        foreach (Direction direction in directions)
-            Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}");
+        var result = new string[directions.Length];
+
+        for (int i = 0; i < directions.Length; i++)
+        {
+            result[i] = Go(directions[i]);
+        }
+        return result;
+            
     }
-    public void Go(string input)
-    {
-        Go(DirectionParser.Parse(input));
-    }
+    public string[] Go(string input) => Go(DirectionParser.Parse(input));
 
     public override string ToString() => $"{this.GetType().Name.ToUpper()}: {Info}";
 
