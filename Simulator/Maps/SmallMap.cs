@@ -8,6 +8,9 @@ namespace Simulator.Maps;
 
 public abstract class SmallMap : Map
 {
+    List<Creature>?[,] _fields;
+
+
     public SmallMap(int sizeX, int sizeY) : base(sizeX, sizeY)
     {
         if (sizeX > 20)
@@ -18,5 +21,8 @@ public abstract class SmallMap : Map
         {
             throw new ArgumentOutOfRangeException(nameof(sizeY), "Too high");
         }
+        _fields = new List<Creature>?[sizeX, sizeY];
     }
+
+    // Add, Remove, At ...
 }

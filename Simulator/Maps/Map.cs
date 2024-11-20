@@ -12,7 +12,13 @@ namespace Simulator.Maps;
 /// </summary>
 public abstract class Map
 {
-    private Rectangle _mapRect;
+    public abstract void Add(Creature creature, Point position);
+    // Remove
+    // Move
+    // At (x,y)
+    // At (p)
+
+    private readonly Rectangle _mapRect;
 
     protected Map(int sizeX, int sizeY)
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simulator.Maps;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,13 @@ using System.Threading.Tasks;
 namespace Simulator;
 public abstract class Creature
 {
+    public Map? Map { get; private set; }
+    public Point Position { get; private set; }
+
+    public void InitMapAndPostion(Map map, Point position);
+
+
+
     private string _name = "Unknown";
     private int _level = 1;
     public string Name
@@ -38,6 +46,7 @@ public abstract class Creature
 
     public void Upgrade() => _level = _level < 10 ? _level + 1 : _level;
     public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
+    //out?
     public string[] Go(Direction[] directions)
     {
         var result = new string[directions.Length];
@@ -49,7 +58,15 @@ public abstract class Creature
         return result;
             
     }
-    public string[] Go(string input) => Go(DirectionParser.Parse(input));
+    //out
+    public string[] Go(string input)
+    {
+        // ma użyć reguł mapy
+
+        return Go(DirectionParser.Parse(input));
+        //public string Go(Direction direction)
+            //return $"{direction.ToString().ToLower()}";
+    }
 
     public override string ToString() => $"{this.GetType().Name.ToUpper()}: {Info}";
 

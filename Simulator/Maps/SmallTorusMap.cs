@@ -23,7 +23,7 @@ public class SmallTorusMap : SmallMap
         }
         else
         {
-            return new Point((next.X + Size) % Size, (next.Y + Size) % Size);
+            return new Point((next.X + SizeX) % SizeX, (next.Y + SizeY) % SizeY);
         }
 
     }
@@ -38,7 +38,7 @@ public class SmallTorusMap : SmallMap
         }
         else
         {
-            return new Point((nextDiag.X + SizeX) % SizeY, (nextDiag.Y + SizeY) % SizeX);
+            return new Point((nextDiag.X + SizeX) % SizeX, (nextDiag.Y + SizeY) % SizeY);
         }
 
     }
