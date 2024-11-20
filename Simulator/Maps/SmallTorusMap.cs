@@ -7,25 +7,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Simulator.Maps;
 
-public class SmallTorusMap : Map
+public class SmallTorusMap : SmallMap
 {
-    public int Size { get; }
-    private Rectangle _mapRect;
-
-    public SmallTorusMap(int size) 
+    public SmallTorusMap(int sizeX, int sizeY) : base(sizeX, sizeY)
     {
-        if (size < 5 || size > 20)
-        {
-            throw new ArgumentOutOfRangeException($"Rozmiar musi być w przedziale [5;20]. Podany rozmiar: {size}");
-        }
-        
-        Size = size;
-        _mapRect = new(new Point(0, 0), new Point(Size - 1, Size - 1));
-    }
-
-    public override bool Exist(Point p)
-    {
-        return _mapRect.Contains(p);
     }
 
     public override Point Next(Point p, Direction d)
@@ -53,7 +38,7 @@ public class SmallTorusMap : Map
         }
         else
         {
-            return new Point((nextDiag.X + Size) % Size, (nextDiag.Y + Size) % Size);
+            return new Point((nextDiag.X + SizeX) % SizeY, (nextDiag.Y + SizeY) % SizeX);
         }
 
     }

@@ -6,22 +6,12 @@ using System.Threading.Tasks;
 
 namespace Simulator.Maps;
 
-public class SmallSquareMap : Map
+public class SmallSquareMap : SmallMap
 {
-    public int Size { get; }
-    private Rectangle _mapRect;
+    public SmallSquareMap(int size) : base(size, size)
+    {
+    }
 
-    public SmallSquareMap(int size)
-    {
-        if (size < 5 || size > 20)
-            throw new ArgumentOutOfRangeException($"Rozmiar musi być w przedziale od 5 do 20. Podany rozmiar: {size}");
-        Size = size;
-        _mapRect = new(new Point(0, 0), new Point(Size - 1, Size - 1));
-    }
-    public override bool Exist(Point p)
-    {
-        return _mapRect.Contains(p);
-    }
     public override Point Next(Point p, Direction d)
     {
         Point next = p.Next(d);
