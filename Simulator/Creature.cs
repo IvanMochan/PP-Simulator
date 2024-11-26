@@ -9,7 +9,7 @@ namespace Simulator;
 public abstract class Creature
 {
     public Map? Map { get; private set; }
-    public Point Position { get; private set; }
+    public Point Position { get; internal set; }
 
     public void InitMapAndPostion(Map map, Point position)
     {
