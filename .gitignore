@@ -361,5 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/TestSimulator/SmallSquareTest.cs
-/TestSimulator/SmallTorusMapTests.cs
