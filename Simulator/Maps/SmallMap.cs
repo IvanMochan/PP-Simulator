@@ -44,16 +44,16 @@ public abstract class SmallMap : Map
     }
     public override void Move(Creature creature, Point from, Point to)
     {
+        Console.WriteLine($"{Exist(to)} {to}");
         if (!Exist(to))
             throw new ArgumentException($"Docelowa pozycja spoza zakresu mapy {to}");
-        //Console.WriteLine(_creaturePositions.ContainsKey(new Point(3, 4)));
-        //Console.WriteLine($"Moving from {from}");
+
         if (!_creaturePositions.ContainsKey(from))
             return;
-        //Console.WriteLine(_creaturePositions[from]);
+
         if (_creaturePositions[from].Remove(creature))
             Add(creature, to);
-        //Console.WriteLine(_creaturePositions[from]);
+
     }
     public override List<Creature> At(Point position)
     {
