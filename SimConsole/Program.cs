@@ -8,10 +8,10 @@ class Program
     {
         Console.OutputEncoding = Encoding.UTF8;
         SmallSquareMap map = new(10);
-        List<Creature> creatures = [new Orc("Gorbag"), new Elf("Elandor"), new Elf("Legolas"), new Orc("Thrall"), new Elf("Sylvanas")];
+        List<IMappable> mappables = [new Orc("Gorbag"), new Elf("Elandor"), new Elf("Legolas"), new Orc("Thrall"), new Elf("Sylvanas")];
         List<Point> points = [new(0, 0), new(3, 1), new(0, 0), new(1, 1), new(0, 0)];
         string moves = "dlrludlxxl";
-        Simulation simulation = new(map, creatures, points, moves);
+        Simulation simulation = new(map, mappables, points, moves);
         MapVisualizer mapVisualizer = new(simulation.Map);
         Console.WriteLine("SIMULATION!");
         Console.WriteLine("\nStarting positions:");

@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Simulator;
-public abstract class Creature
+public abstract class Creature : IMappable
 {
     public Map? Map { get; private set; }
-    public Point Position { get; internal set; }
+    public Point Position { get; private set; }
+
 
     public void InitMapAndPostion(Map map, Point position)
     {
@@ -19,9 +20,7 @@ public abstract class Creature
             throw new InvalidOperationException($"Stwór {Name} jest już przypisany do mapy i nie może zostać przeniesiony na inną mapę.");
         Map = map;
         Position = position;
-        Map.Add(this, position);
     }
-
     private string _name = "Unknown";
     private int _level = 1;
     public string Name
@@ -58,10 +57,20 @@ public abstract class Creature
         if (Map == null)
             throw new InvalidOperationException("Stwór nie jest przypisany do mapy.");
         Point newPosition = Map.Next(Position, direction);
-        Map.Move(this, Position, newPosition);
+        Map.Move(this, Position, newPosition, direction);
         Position = newPosition;
     }
 
     public override string ToString() => $"{this.GetType().Name.ToUpper()}: {Info}";
 
+    public void InitMapAndPosition(Map map, Point position)
+    {
+        if (!map.Exist(position))
+            throw new ArgumentException("Pozycja spoza zakresu mapy.", nameof(position));
+        if (Map != null)
+            throw new InvalidOperationException($"Stwór {Name} jest już przypisany do mapy i nie może zostać przeniesiony na inną mapę.");
+        Map = map;
+        Position = position;
+    }
 }
+
