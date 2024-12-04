@@ -29,6 +29,9 @@ public class Simulation
         if (mappables.Count != positions.Count)
             throw new ArgumentException("Number of creatures must match the number of starting positions.");
 
+        if (moves.Length == 0)
+            Finished = true;
+
         Map = map;
         Mappables = mappables;
         Positions = positions;
@@ -49,15 +52,10 @@ public class Simulation
         if (Finished)
             throw new InvalidOperationException("Simulation is finished.");
 
-        var currentMove = CurrentMoveName;
-        var direction = DirectionParser.Parse(currentMove);
+        Console.WriteLine($"\nTurn {_currentTurnIndex + 1}");
+        Console.WriteLine($"{CurrentMappable} {CurrentMappable.Position} goes {CurrentMoveName}:");
+        CurrentMappable.Go(_directions[_currentTurnIndex % _directions.Count]);
 
-        if (direction != null && direction.Count > 0)
-        {
-            Console.WriteLine($"\nTurn {_currentTurnIndex + 1}");
-            Console.WriteLine($"{CurrentMappable} {CurrentMappable.Position} goes {CurrentMoveName}:");
-            CurrentMappable.Go(_directions[_currentTurnIndex % _directions.Count]);
-        }
         _currentTurnIndex++;
 
         if (_currentTurnIndex >= Moves.Length)
