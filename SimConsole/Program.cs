@@ -8,9 +8,9 @@ class Program
     {
         Console.OutputEncoding = Encoding.UTF8;
         SmallSquareMap map = new(10);
-        List<IMappable> mappables = [new Orc("Gorbag"), new Elf("Elandor"), new Elf("Legolas"), new Orc("Thrall"), new Elf("Sylvanas")];
-        List<Point> points = [new(0, 0), new(3, 1), new(0, 0), new(1, 1), new(0, 0)];
-        string moves = "dlrludlxxl";
+        List<IMappable> mappables = [new Orc("Gorbag"), new Elf("Elandor")];
+        List<Point> points = [new(2, 2), new(3, 1)];
+        string moves = "dlrludl";
         Simulation simulation = new(map, mappables, points, moves);
         MapVisualizer mapVisualizer = new(simulation.Map);
         Console.WriteLine("SIMULATION!");
@@ -19,9 +19,9 @@ class Program
         {
             mapVisualizer.Draw();
             Console.WriteLine("Press any key to continue...");
-            var key = Console.ReadKey();
             simulation.Turn();
         }
         mapVisualizer.Draw();
+        Console.WriteLine("End of simulation!");
     }
 }
