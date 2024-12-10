@@ -12,7 +12,7 @@ public readonly struct Point
     public Point(int x, int y) => (X, Y) = (x, y);
     public override string ToString() => $"({X}, {Y})";
 
-    public Point Next(Direction direction)
+    public Point Next(Direction direction, int AddiMoves = 0)
     {
         int new_x = X;
         int new_y = Y;

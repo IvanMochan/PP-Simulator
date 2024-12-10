@@ -18,7 +18,7 @@ public abstract class Map
     public abstract List<IMappable> At(int x, int y);
     public abstract List<IMappable> At(Point point);
 
-    private readonly Rectangle _mapRect;
+    protected readonly Rectangle _mapRect;
 
     protected Map(int sizeX, int sizeY)
     {
