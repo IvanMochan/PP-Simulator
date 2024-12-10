@@ -1,6 +1,7 @@
 ﻿using Simulator;
 using Simulator.Maps;
 using System.Text;
+
 namespace SimConsole;
 class Program
 {
@@ -15,15 +16,12 @@ class Program
         string moves = "lrduuulrdduullrdrrud";
         Simulation simulation = new(map, mappables, points, moves);
         MapVisualizer mapVisualizer = new(simulation.Map);
-        Console.WriteLine("SIMULATION!");
-        Console.WriteLine("\nStarting positions:");
-        while (!simulation.Finished)
-        {
-            Console.Write(mapVisualizer.Draw());
-            Console.WriteLine("Press any key to continue...");
-            simulation.Turn();
-        }
-        Console.Write(mapVisualizer.Draw());
-        Console.WriteLine("End of simulation!");
+        //Console.WriteLine("SIMULATION!");
+        //Console.WriteLine("\nStarting positions:");
+        SimulationHistory sh = new(simulation);
+        sh.DisplayTurn(5);
+        sh.DisplayTurn(10);
+        sh.DisplayTurn(15);
+        sh.DisplayTurn(20);
     }
 }
