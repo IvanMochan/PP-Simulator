@@ -16,8 +16,11 @@ class Program
         string moves = "lrduuulrdduullrdrrud";
         Simulation simulation = new(map, mappables, points, moves);
         MapVisualizer mapVisualizer = new(simulation.Map);
-        //Console.WriteLine("SIMULATION!");
+        Console.WriteLine("SIMULATION!");
         //Console.WriteLine("\nStarting positions:");
         SimulationHistory sh = new(simulation);
+        LogVisualizer lv = new(sh);
+        for (int i = 0; i < sh.TurnLogs.Count; i++)
+            Console.WriteLine($"{i}: {lv.Draw(i)}");
     }
 }
