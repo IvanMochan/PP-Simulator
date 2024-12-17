@@ -7,18 +7,11 @@ using System.Threading.Tasks;
 
 namespace Simulator.Maps;
 
-/// <summary>
-/// Map of points.
-/// </summary>
 public abstract class Map
 {
-    public abstract void Add(Point position, IMappable mappable);
-    public abstract void Remove(Point point, IMappable mappable);
-    public abstract void Move(IMappable mappable, Point from, Point to, Direction direction);
-    public abstract List<IMappable> At(int x, int y);
-    public abstract List<IMappable> At(Point point);
-
     protected readonly Rectangle _mapRect;
+
+    public readonly Dictionary<Point, List<IMappable>> MappablePositions;
 
     protected Map(int sizeX, int sizeY)
     {
@@ -35,32 +28,48 @@ public abstract class Map
         SizeY = sizeY;
         //_mapRect = new(new Point(0, 0), new Point(SizeX - 1, SizeY - 1));
         _mapRect = new Rectangle(0, 0, SizeX - 1, SizeY - 1);
+        MappablePositions = [];
     }
 
     public int SizeX { get; }
     public int SizeY { get; }
 
-    /// <summary>
-    /// Check if give point belongs to the map.
-    /// </summary>
-    /// <param name="p">Point to check.</param>
-    /// <returns></returns>
     public virtual bool Exist(Point p) => _mapRect.Contains(p) ;
 
-    /// <summary>
-    /// Next position to the point in a given direction.
-    /// </summary>
-    /// <param name="p">Starting point.</param>
-    /// <param name="d">Direction.</param>
-    /// <returns>Next point.</returns>
     public abstract Point Next(Point p, Direction d);
 
-    /// <summary>
-    /// Next diagonal position to the point in a given direction 
-    /// rotated 45 degrees clockwise.
-    /// </summary>
-    /// <param name="p">Starting point.</param>
-    /// <param name="d">Direction.</param>
-    /// <returns>Next point.</returns>
     public abstract Point NextDiagonal(Point p, Direction d);
+
+    public void Add(Point position, IMappable mappable)
+    {
+        if (!Exist(position))
+            throw new ArgumentException($"Pozycja spoza zakresu mapy {position}");
+        if (!MappablePositions.ContainsKey(position))
+            MappablePositions[position] = [];
+        MappablePositions[position].Add(mappable);
+    }
+    public void Remove(Point point, IMappable mappable)
+    {
+        if (!MappablePositions.TryGetValue(point, out List<IMappable>? value))
+            return;
+        value.Remove(mappable);
+        if (value.Count == 0)
+            MappablePositions.Remove(point);
+    }
+    public void Move(IMappable mappable, Point from, Point to, Direction direction)
+    {
+        if (!Exist(to))
+            throw new ArgumentException($"Docelowa pozycja spoza zakresu mapy {to}");
+        if (!MappablePositions.TryGetValue(from, out List<IMappable>? value))
+            return;
+        if (value.Remove(mappable))
+        {
+            Add(to, mappable);
+        }
+    }
+    public List<IMappable> At(Point position)
+    {
+        return MappablePositions.TryGetValue(position, out var mappables) ? mappables : ([]);
+    }
+    public List<IMappable> At(int x, int y) => At(new Point(x, y));
 }

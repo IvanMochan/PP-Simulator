@@ -12,6 +12,10 @@ public class SmallTorusMap : SmallMap
     public SmallTorusMap(int sizeX, int sizeY) : base(sizeX, sizeY)
     {
     }
+    public override bool Exist(Point p)
+    {
+        return _mapRect.Contains(p);
+    }
 
     public override Point Next(Point p, Direction d)
     {
