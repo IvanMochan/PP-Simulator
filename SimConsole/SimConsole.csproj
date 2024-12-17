@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="SimulationHistrory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Simulator\Simulator.csproj" />
   </ItemGroup>
 
